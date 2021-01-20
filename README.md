@@ -31,7 +31,11 @@ O mecanismo utilizado para comunicação é o [Android Deep Link](https://develo
 Adicionar a dependência do SDK no projeto Android. Por exemplo, caso seu projeto utiliza gradle, adicione dentro ta tag de _dependencies_ a seguinte linha:
 
 ```gradle
+dependencies {
+   ...
    implementation files('<path>/VTEXPaymentSDK_0.0.1.aar')
+   ...
+}
 ```
 
 ### Android Manifest
