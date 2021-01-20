@@ -187,3 +187,18 @@ PaymentPayload paymentPayload = new PaymentPayload(resposta);
 PaymentResponse paymentResponse = new PaymentResponse(paymentPayload);
 startActivity(paymentResponse);
 ```
+
+# Testando sua aplicação
+
+Esse projeto seed permite o desenvolvedor olhar um exemplo do SDK implementando o protocolo de comunicação. Caso queira testar sua aplicação utilizando a atividade qu simular o comportamento do inStore nesse projeto basta fazer o seguinte:
+
+Procure a classe `MockUtils.java` e dentro dela o método `getMockPaymentRequestIntent`. Na primeira linha do método:
+
+``` java
+  public static Intent getMockPaymentRequestIntent() {
+    Uri.Builder builder = Uri.parse("sdk://payment").buildUpon();
+    ...
+  }
+```
+
+Troque o trecho inicial da URI de "sdk" para o scheme utilizado em sua aplicação. Isso irá permitir que a atividade mock do inStore envie requisições de pagamento mock diretamente para o app de sua escolha. Caso queira testar requisições de estorno faça o mesmo com o método `getMockPaymentReversalRequestIntent`.
