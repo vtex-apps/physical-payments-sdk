@@ -9,7 +9,7 @@ Um protocolo de comunicação foi definido para formalizar essa comunicação en
 - O que deve ser retornado
 - Qual o meio de comunicação a ser utilizado
 
-![stack Overflow](./image.png)
+![arquitetura](https://github.com/vtex-apps/physical-payments-sdk/blob/main/image.png)
 
 Além do protocolo, um SDK foi desenvolvido que implementa este protocolo e pode ser utilizado para abstrair parte dos desafios técnicos de implementação do protocolo.
 
