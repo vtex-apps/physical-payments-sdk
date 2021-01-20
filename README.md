@@ -22,7 +22,7 @@ O SDK foi desenvolvido com o foco em Android nativo. O SDK disponibiliza:
 
 ### Deep Linking
 
-O mecanismo utilizado para comunicação é o [Android App Link](https://developer.android.com/training/app-links) através de [Android intents](https://developer.android.com/reference/android/content/Intent). É preciso definir uma Android Activity que receba intents específicos com o scheme do Android para receber requisições de pagamento. Da mesma forma, é preciso criar intents e iniciar atividades com eles para enviar respostas ao inStore.
+O mecanismo utilizado para comunicação é o [Android Deep Link](https://developer.android.com/training/app-links) através de [Android intents](https://developer.android.com/reference/android/content/Intent). É preciso definir uma Android Activity que receba intents específicos com o scheme do Android para receber requisições de pagamento. Da mesma forma, é preciso criar intents e iniciar atividades com eles para enviar respostas ao inStore.
 
 ## Configuração Inicial
 
