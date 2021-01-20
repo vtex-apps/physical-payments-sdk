@@ -28,7 +28,7 @@ O mecanismo utilizado para comunicação é o [Android Deep Link](https://develo
 
 ### Integração com SDK
 
-Adicionar a dependência do SDK no projeto Android. Por exemplo, caso seu projeto utiliza gradle, adicione dentro ta tag de _dependencies_ a seguinte linha:
+Adicionar a dependência do SDK no projeto Android. Por exemplo, caso seu projeto utiliza gradle, adicione dentro da tag de _dependencies_ a seguinte linha:
 
 ```gradle
 dependencies {
