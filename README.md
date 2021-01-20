@@ -130,6 +130,56 @@ public void onNewIntent(Intent intent) {
 
 > No exemplo acima, `activityIntentProcessor` é um objeto instanciado da classe `IntentProcessor`.
 
-### Data Transfer Objects (DTO)
 
-...
+# Data Transfer Objects (DTO)
+
+## Entrada / Requisições
+
+Existem duas classes que representam requisições de entradas com seus respectivos dados: `PaymentRequest` e  `PaymentReversalRequest`.
+
+Os campos dentro dessas classes podem ser acessados através de `getters` ou se preferir através do método `toJSONObject` que transforma a classe em um `JSONObject`.
+
+Os campos acessíveis através de getters são os campos obrigatórios e determinados como necessários pelo protocolo de comunicação. Porém, é possível que sua integração demande de outros campos que o inStore pode passar a enviar.
+
+Todo dado enviado pelo inStore que não está contemplado pelo protocolo de comunicação será armazenado no campo `customFields` o qual é acessível por um getter como também pelo método `toJSONObject`.
+
+## Saída / Respostas de Sucesso
+
+Existem duas classes que representam respostas de sucesso no SDK: `PaymentResponse` e  `PaymentReversalResponse`. Essas classes necessitam em seu construtor de um objeto do tipo `PaymentPayload` e `PaymentReversalPayload` respectivamente.
+
+Dois construtores estão disponíveis para as classes do tipo "payload". Um construtor vazio, para ser utilizado em conjunto com os setters definidos na classe e um construtor que recebe um `JSONObject`, que extrai os dados do objeto passado.
+
+> **Atenção**: Ao utilizar o construtor com `JSONObject` é preciso ter cuidado para que ao menos todos os campos obrigatórios estejam presentes no `JSONObject` ou uma exceção será lançada. __Campos extras passados através desse construtor são ignorados__.
+
+Ambas as classes também contém um campo `customFields` que permite que dados, além daqueles definidos no protocolo, sejam enviados para o inStore. O método `addCustomField(String key, String value)` foi criado para facilitar a adição desses campos extras.
+
+## Saída / Erros
+
+Em caso de erro existem duas classes que representam respostas de erro no SDK: `GenericPaymentErrorResponse` e `GenericPaymentReversalErrorResponse`. Essas classes recebem um `JSONObject` em seu construtor. 
+
+> O protocolo definido para mensagens de erro ainda é genérico e está em processo de definição.
+
+Por convenção utilizados o seguintes campos dentro do payload de erro: 
+- **error**: mensagem de erro
+- **reason**: mais detalhes do erro
+- **responsecode**: código do erro
+
+# Enviando resposta ao inStore
+
+O envio de respostas ao inStore ocorre pelo início de uma nova atividade utilizando um intent programado para envio de dados. Por exemplo, pode-se utilizar o método `startActivity` contido dentro do contexto de uma atividade Android. 
+
+As seguintes classes `DTO` de saída fazem extends da classe [Android Intent](https://developer.android.com/reference/android/content/Intent):
+- PaymentResponse
+- PaymentReversalResponse
+- GenericPaymentErrorResponse
+- GenericPaymentReversalErrorResponse
+
+Isso permite que essas classes possam ser diretamente utilizadas com um método que inicia uma atividade.
+
+Exemplo de código contendo envio de resposta ao inStore:
+
+```java
+PaymentPayload paymentPayload = new PaymentPayload(resposta);
+PaymentResponse paymentResponse = new PaymentResponse(paymentPayload);
+startActivity(paymentResponse);
+```
