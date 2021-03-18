@@ -3,10 +3,8 @@ package sdk.android.seed;
 import android.content.Intent;
 import android.net.Uri;
 
-import org.json.JSONObject;
-
-import vtex.payment.sdk.dto.PaymentPayload;
-import vtex.payment.sdk.dto.PaymentReversalPayload;
+import vtex.payment.sdk.dto.output.PaymentPayload;
+import vtex.payment.sdk.dto.output.PaymentReversalPayload;
 
 public class MockUtils {
 
@@ -20,107 +18,111 @@ public class MockUtils {
   }
 
   public static PaymentPayload getMockPaymentResponse() {
-    JSONObject jsonObject = new JSONObject();
     PaymentPayload paymentPayload = new PaymentPayload();
 
-    paymentPayload.scheme = "mock";
-    paymentPayload.action = "mock";
-    paymentPayload.paymentId = MockUtils.getRandomString();
-    paymentPayload.cardBrandName = "mock";
-    paymentPayload.firstDigits = "mock";
-    paymentPayload.lastDigits = "mock";
-    paymentPayload.cardToken = "mock";
-    paymentPayload.acquirerName = "mock";
-    paymentPayload.nsu = MockUtils.getRandomString();
-    paymentPayload.merchantReceipt = "mock";
-    paymentPayload.customerReceipt = "mock";
-    paymentPayload.responsecode = "mock";
-    paymentPayload.reason = "mock";
-    paymentPayload.success = "mock";
-    paymentPayload.tid = MockUtils.getRandomString();
-    paymentPayload.acquirerAuthorizationCode = "mock";
-    paymentPayload.authorizationId = MockUtils.getRandomString();
+    paymentPayload.setPaymentId(MockUtils.getRandomString());
+    paymentPayload.setCardBrandName("mock");
+    paymentPayload.setFirstDigits("mock");
+    paymentPayload.setLastDigits("mock");
+    paymentPayload.setNsu(MockUtils.getRandomString());
+    paymentPayload.setTid(MockUtils.getRandomString());
+    paymentPayload.setAuthorizationId(MockUtils.getRandomString());
+
+    paymentPayload.addCustomField("scheme", "mock");
+    paymentPayload.addCustomField("action", "mock");
+    paymentPayload.addCustomField("merchantReceipt", "mock");
+    paymentPayload.addCustomField("customerReceipt", "mock");
+    paymentPayload.addCustomField("responsecode", "mock");
+    paymentPayload.addCustomField("reason", "mock");
+    paymentPayload.addCustomField("success", "mock");
+    paymentPayload.addCustomField("acquirerAuthorizationCode", "mock");
+    paymentPayload.addCustomField("cardToken", "mock");
+    paymentPayload.addCustomField("acquirerName", "mock");
 
     return paymentPayload;
   }
 
   public static PaymentReversalPayload getMockPaymentReversalResponse() {
-    PaymentReversalPayload paymentReversalPayload =
-        new PaymentReversalPayload();
+    PaymentReversalPayload paymentReversalPayload = new PaymentReversalPayload();
 
-    paymentReversalPayload.scheme = "mock";
-    paymentReversalPayload.action = "mock";
-    paymentReversalPayload.paymentId = MockUtils.getRandomString();
-    paymentReversalPayload.acquirerName = "mock";
-    paymentReversalPayload.tid = MockUtils.getRandomString();
-    paymentReversalPayload.acquirerAuthorizationCode = "mock";
-    paymentReversalPayload.nsu = MockUtils.getRandomString();
-    paymentReversalPayload.merchantReceipt = "mock";
-    paymentReversalPayload.customerReceipt = "mock";
-    paymentReversalPayload.responsecode = "mock";
-    paymentReversalPayload.reason = "mock";
-    paymentReversalPayload.success = "mock";
+    paymentReversalPayload.setTid(MockUtils.getRandomString());
+
+    paymentReversalPayload.addCustomField("scheme", "mock");
+    paymentReversalPayload.addCustomField("action", "mock");
+    paymentReversalPayload.addCustomField("paymentId", MockUtils.getRandomString());
+    paymentReversalPayload.addCustomField("acquirerName", "mock");
+    paymentReversalPayload.addCustomField("acquirierAuthorizationCode", "mock");
+    paymentReversalPayload.addCustomField("nsu", MockUtils.getRandomString());
+    paymentReversalPayload.addCustomField("merchantReceipt", "mock");
+    paymentReversalPayload.addCustomField("customerReceipt", "mock");
+    paymentReversalPayload.addCustomField("responsecode", "mock");
+    paymentReversalPayload.addCustomField("reason", "mock");
+    paymentReversalPayload.addCustomField("success", "mock");
 
     return paymentReversalPayload;
   }
 
   public static Intent getMockPaymentRequestIntent() {
-    final Intent sendPaymentIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sdk://payment"));
-    sendPaymentIntent.putExtra("scheme", "mock");
-    sendPaymentIntent.putExtra("action", "mock");
-    sendPaymentIntent.putExtra("paymentId", MockUtils.getRandomString());
-    sendPaymentIntent.putExtra("firstDigits", "mock");
-    sendPaymentIntent.putExtra("acquirerName", "mock");
-    sendPaymentIntent.putExtra("merchantReceipt", "mock");
-    sendPaymentIntent.putExtra("customerReceipt", "mock");
-    sendPaymentIntent.putExtra("responsecode", "mock");
-    sendPaymentIntent.putExtra("success", "mock");
-    sendPaymentIntent.putExtra("authorizationId", MockUtils.getRandomString());
-    sendPaymentIntent.putExtra("mobileLinkingUrl", "mock");
-    sendPaymentIntent.putExtra("acquirerProtocol", "mock");
-    sendPaymentIntent.putExtra("acquirer", "mock");
-    sendPaymentIntent.putExtra("brand", "mock");
-    sendPaymentIntent.putExtra("tid", MockUtils.getRandomString());
+    Uri.Builder builder = Uri.parse("sdk://payment").buildUpon();
+    builder.appendQueryParameter("acquirerProtocol", "mock");
+    builder.appendQueryParameter("action", "mock");
+    builder.appendQueryParameter("installmentType", MockUtils.getRandomString());
+    builder.appendQueryParameter("installments", "mock");
+    builder.appendQueryParameter("paymentType", "mock");
+    builder.appendQueryParameter("amount", "mock");
+    builder.appendQueryParameter("scheme", "mock");
+    builder.appendQueryParameter("autoConfirm", "mock");
+    builder.appendQueryParameter("installmentsInterestRate", "mock");
+    builder.appendQueryParameter("acquirerFee", "mock");
+    builder.appendQueryParameter("merchantName", "mock");
+    builder.appendQueryParameter("externalReference", "mock");
+    builder.appendQueryParameter("corporateDocument", "mock");
+    builder.appendQueryParameter("paymentProcessor", "mock");
+    builder.appendQueryParameter("appKey", "mock");
+    builder.appendQueryParameter("appToken", "mock");
+    builder.appendQueryParameter("paymentId", MockUtils.getRandomString());
+    builder.appendQueryParameter("paymentSystem", "mock");
+    builder.appendQueryParameter("paymentSystemName", "mock");
 
-    return sendPaymentIntent;
+    return new Intent(Intent.ACTION_VIEW, builder.build());
   }
 
   public static Intent getMockPaymentReversalRequestIntent() {
-    final Intent sendPaymentReversalIntent =
-        new Intent(Intent.ACTION_VIEW, Uri.parse("sdk://payment-reversal"));
+    Uri.Builder builder = Uri.parse("sdk://payment-reversal").buildUpon();
 
-    sendPaymentReversalIntent.putExtra("acquirer", "mock");
-    sendPaymentReversalIntent.putExtra("acquirerAuthorizationCode", "mock");
-    sendPaymentReversalIntent.putExtra("acquirerFee", "mock");
-    sendPaymentReversalIntent.putExtra("acquirerProtocol", "mock");
-    sendPaymentReversalIntent.putExtra("action", "mock");
-    sendPaymentReversalIntent.putExtra("administrativeCode", MockUtils.getRandomString());
-    sendPaymentReversalIntent.putExtra("appKey", "mock");
-    sendPaymentReversalIntent.putExtra("appToken", "mock");
-    sendPaymentReversalIntent.putExtra("autoConfirm", "mock");
-    sendPaymentReversalIntent.putExtra("brand", "mock");
-    sendPaymentReversalIntent.putExtra("customerReceipt", "mock");
-    sendPaymentReversalIntent.putExtra("firstDigits", "mock");
-    sendPaymentReversalIntent.putExtra("installmentType", "mock");
-    sendPaymentReversalIntent.putExtra("lastDigits", "mock");
-    sendPaymentReversalIntent.putExtra("linkedAffiliationId", "mock");
-    sendPaymentReversalIntent.putExtra("merchantReceipt", "mock");
-    sendPaymentReversalIntent.putExtra("nsu", MockUtils.getRandomString());
-    sendPaymentReversalIntent.putExtra("paymentGroupName", "mock");
-    sendPaymentReversalIntent.putExtra("paymentId", MockUtils.getRandomString());
-    sendPaymentReversalIntent.putExtra("paymentProcessor", "mock");
-    sendPaymentReversalIntent.putExtra("paymentSystem", "mock");
-    sendPaymentReversalIntent.putExtra("paymentSystemName", "mock");
-    sendPaymentReversalIntent.putExtra("responsecode", "mock");
-    sendPaymentReversalIntent.putExtra("scheme", "mock");
-    sendPaymentReversalIntent.putExtra("sellerName", "mock");
-    sendPaymentReversalIntent.putExtra("splitChargeProcessingFee", "mock");
-    sendPaymentReversalIntent.putExtra("splitChargebackLiable", "mock");
-    sendPaymentReversalIntent.putExtra("splitSendRecipients", "mock");
-    sendPaymentReversalIntent.putExtra("success", "mock");
-    sendPaymentReversalIntent.putExtra("tid", MockUtils.getRandomString());
-    sendPaymentReversalIntent.putExtra("transactionId", MockUtils.getRandomString());
-    sendPaymentReversalIntent.putExtra("value", "mock");
-    return sendPaymentReversalIntent;
+    builder.appendQueryParameter("acquirer", "mock");
+    builder.appendQueryParameter("acquirerAuthorizationCode", "mock");
+    builder.appendQueryParameter("acquirerFee", "mock");
+    builder.appendQueryParameter("acquirerProtocol", "mock");
+    builder.appendQueryParameter("action", "mock");
+    builder.appendQueryParameter("administrativeCode", MockUtils.getRandomString());
+    builder.appendQueryParameter("appKey", "mock");
+    builder.appendQueryParameter("appToken", "mock");
+    builder.appendQueryParameter("autoConfirm", "mock");
+    builder.appendQueryParameter("brand", "mock");
+    builder.appendQueryParameter("customerReceipt", "mock");
+    builder.appendQueryParameter("firstDigits", "mock");
+    builder.appendQueryParameter("installmentType", "mock");
+    builder.appendQueryParameter("lastDigits", "mock");
+    builder.appendQueryParameter("linkedAffiliationId", "mock");
+    builder.appendQueryParameter("merchantReceipt", "mock");
+    builder.appendQueryParameter("nsu", MockUtils.getRandomString());
+    builder.appendQueryParameter("paymentGroupName", "mock");
+    builder.appendQueryParameter("paymentId", MockUtils.getRandomString());
+    builder.appendQueryParameter("paymentProcessor", "mock");
+    builder.appendQueryParameter("paymentSystem", "mock");
+    builder.appendQueryParameter("paymentSystemName", "mock");
+    builder.appendQueryParameter("responsecode", "mock");
+    builder.appendQueryParameter("scheme", "mock");
+    builder.appendQueryParameter("sellerName", "mock");
+    builder.appendQueryParameter("splitChargeProcessingFee", "mock");
+    builder.appendQueryParameter("splitChargebackLiable", "mock");
+    builder.appendQueryParameter("splitSendRecipients", "mock");
+    builder.appendQueryParameter("success", "mock");
+    builder.appendQueryParameter("tid", MockUtils.getRandomString());
+    builder.appendQueryParameter("transactionId", MockUtils.getRandomString());
+    builder.appendQueryParameter("value", "mock");
+
+    return new Intent(Intent.ACTION_VIEW, builder.build());
   }
 }
