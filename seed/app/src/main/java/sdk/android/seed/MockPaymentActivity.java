@@ -1,18 +1,22 @@
 package sdk.android.seed;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
 import vtex.payment.sdk.PaymentActivity;
-import vtex.payment.sdk.dto.PaymentRequest;
-import vtex.payment.sdk.dto.PaymentResponse;
-import vtex.payment.sdk.dto.PaymentPayload;
-import vtex.payment.sdk.dto.PaymentReversalPayload;
-import vtex.payment.sdk.dto.PaymentReversalRequest;
-import vtex.payment.sdk.dto.PaymentReversalResponse;
+import vtex.payment.sdk.dto.input.PaymentRequest;
+import vtex.payment.sdk.dto.input.PaymentReversalRequest;
+import vtex.payment.sdk.dto.output.PaymentResponse;
+import vtex.payment.sdk.dto.output.PaymentPayload;
+import vtex.payment.sdk.dto.output.PaymentReversalPayload;
+import vtex.payment.sdk.dto.output.PaymentReversalResponse;
 
 public class MockPaymentActivity extends PaymentActivity {
 
@@ -24,18 +28,16 @@ public class MockPaymentActivity extends PaymentActivity {
 
   @Override
   public void onPaymentRequest(PaymentRequest paymentRequest) {
-    super.onPaymentRequest(paymentRequest);
     paymentReversalResponseButton.setVisibility(View.GONE);
     paymentResponseButton.setVisibility(View.VISIBLE);
-    this.setTextViewAccordingToTheRequest(paymentRequest.extras);
+    this.setTextViewAccordingToTheRequest(paymentRequest.toJSONObject(), paymentRequest.getCustomFields());
   }
 
   @Override
   public void onPaymentReversalRequest(PaymentReversalRequest paymentReversalRequest) {
-    super.onPaymentReversalRequest(paymentReversalRequest);
     paymentReversalResponseButton.setVisibility(View.VISIBLE);
     paymentResponseButton.setVisibility(View.GONE);
-    this.setTextViewAccordingToTheRequest(paymentReversalRequest.extras);
+    this.setTextViewAccordingToTheRequest(paymentReversalRequest.toJSONObject(), paymentReversalRequest.getCustomFields());
   }
 
   @Override
@@ -47,28 +49,51 @@ public class MockPaymentActivity extends PaymentActivity {
     super.onCreate(savedInstanceState);
   }
 
-  private void setTextViewAccordingToTheRequest(Bundle extras) {
-    if (extras != null && this.textView != null) {
-      String allExtras = "";
-      for (String key : extras.keySet()) {
-        allExtras = allExtras.concat(key + " : " + extras.getString(key) + "\n");
+  private void setTextViewAccordingToTheRequest(JSONObject dataJsonObject, JSONObject customFieldsJsonObject) {
+    if(this.textView != null) {
+      String allData = "";
+
+      if (dataJsonObject != null) {
+        dataJsonObject.remove("customFields");
+        try {
+          Iterator<String> keys = dataJsonObject.keys();
+          while (keys.hasNext()) {
+            String key = keys.next();
+            allData = allData.concat(key + " : " + dataJsonObject.getString(key) + "\n");
+          }
+        } catch (JSONException err) {
+          throw new RuntimeException(err);
+        }
       }
-      this.textView.setText(allExtras);
+
+      if (customFieldsJsonObject != null) {
+        allData = allData.concat("\n Custom Fields: \n");
+
+        try {
+          Iterator<String> keys = customFieldsJsonObject.keys();
+          while (keys.hasNext()) {
+            String key = keys.next();
+            allData = allData.concat(key + " : " + customFieldsJsonObject.getString(key) + "\n");
+          }
+        } catch (JSONException err) {
+          throw new RuntimeException(err);
+        }
+      }
+
+      this.textView.setText(allData);
     }
   }
 
   public void onSendPaymentResponse(View view) {
     PaymentPayload mockPaymentPayload = MockUtils.getMockPaymentResponse();
     PaymentResponse paymentResponse = new PaymentResponse(mockPaymentPayload);
-    Intent inStoreIntent = paymentResponse.intent;
-    startActivity(inStoreIntent);
+    startActivity(paymentResponse);
   }
 
   public void onSendPaymentReversalResponse(View view) {
     PaymentReversalPayload mockPaymentReversalPayload = MockUtils.getMockPaymentReversalResponse();
     PaymentReversalResponse paymentReversalResponse =
         new PaymentReversalResponse(mockPaymentReversalPayload);
-    Intent inStoreIntent = paymentReversalResponse.intent;
-    startActivity(inStoreIntent);
+    startActivity(paymentReversalResponse);
   }
 }
