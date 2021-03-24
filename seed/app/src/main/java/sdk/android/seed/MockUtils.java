@@ -11,8 +11,6 @@ public class MockUtils {
   private static String getRandomString() {
     int min = 11111111;
     int max = 99999999;
-    // Generate random double value from 50 to 100
-    System.out.println("Random value in double from " + min + " to " + max + ":");
     int random_int = (int) (Math.random() * (max - min + 1) + min);
     return "" + random_int;
   }
@@ -21,6 +19,7 @@ public class MockUtils {
     PaymentPayload paymentPayload = new PaymentPayload();
 
     paymentPayload.setPaymentId(MockUtils.getRandomString());
+    paymentPayload.setTransactionId(MockUtils.getRandomString());
     paymentPayload.setCardBrandName("mock");
     paymentPayload.setFirstDigits("mock");
     paymentPayload.setLastDigits("mock");
@@ -46,10 +45,11 @@ public class MockUtils {
     PaymentReversalPayload paymentReversalPayload = new PaymentReversalPayload();
 
     paymentReversalPayload.setTid(MockUtils.getRandomString());
+    paymentReversalPayload.setTransactionId(MockUtils.getRandomString());
+    paymentReversalPayload.setPaymentId(MockUtils.getRandomString());
 
     paymentReversalPayload.addCustomField("scheme", "mock");
     paymentReversalPayload.addCustomField("action", "mock");
-    paymentReversalPayload.addCustomField("paymentId", MockUtils.getRandomString());
     paymentReversalPayload.addCustomField("acquirerName", "mock");
     paymentReversalPayload.addCustomField("acquirierAuthorizationCode", "mock");
     paymentReversalPayload.addCustomField("nsu", MockUtils.getRandomString());
@@ -81,6 +81,7 @@ public class MockUtils {
     builder.appendQueryParameter("appKey", "mock");
     builder.appendQueryParameter("appToken", "mock");
     builder.appendQueryParameter("paymentId", MockUtils.getRandomString());
+    builder.appendQueryParameter("transactionId", MockUtils.getRandomString());
     builder.appendQueryParameter("paymentSystem", "mock");
     builder.appendQueryParameter("paymentSystemName", "mock");
 
