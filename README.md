@@ -199,28 +199,28 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 > O PaymentResponse Encapsula o DTO `PaymentPayload`
 
 `PaymentPayload.java`
-| Atributo        | Tipo            |  Exemplo                         | Descrição                     | 
-| --------------- |:--------------: | :------------------------------: | ----------------------------- |
-| paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
-| transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
-| cardBrandName   | String          | Visa                             | Nome da bandeira do cartão |
-| firstDigits     | String          | 123456                           | Primeiros 6 dígitos do cartão |
-| lastDigits      | String          | 4321                             | Últimos 4 dígitos do cartão |
-| nsu             | String          | 066319694308                     | Número Sequencial único do pagamento na adquirência |
-| tid             | String          | uovdjptiak9hvnwyk9qx             | Identificador único do pagamento na adquirência |
-| authorizationId | String          | YSDLKYW731QZ                     | Identificador da authorização do pagamento na adquirência |
-| customFields    | JSONObject      | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
+| Atributo        | Tipo            | Obrigatório |  Exemplo                         | Descrição                     | 
+| --------------- |:--------------: | :---------: | :------------------------------: | ----------------------------- |
+| paymentId       | String          | Sim         | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
+| transactionId   | String          | Sim         | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
+| cardBrandName   | String          | Sim         | Visa                             | Nome da bandeira do cartão |
+| firstDigits     | String          | Sim         | 123456                           | Primeiros 6 dígitos do cartão |
+| lastDigits      | String          | Sim         | 4321                             | Últimos 4 dígitos do cartão |
+| nsu             | String          | Sim         | 066319694308                     | Número Sequencial único do pagamento na adquirência |
+| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx             | Identificador único do pagamento na adquirência |
+| authorizationId | String          | Sim         | YSDLKYW731QZ                     | Identificador da authorização do pagamento na adquirência |
+| customFields    | JSONObject      | Não         | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
 
 ### Payment Reversal Payload (Resposta do Reembolso)
 > O PaymentReversalResponse Encapsula o DTO `PaymentReversalPayload`
 
 `PaymentReversalPayload.java`
-| Atributo        | Tipo            |  Exemplo                          | Descrição                     | 
-| --------------- |:--------------: | :-------------------------------: | ----------------------------- |
-| paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
-| transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
-| tid             | String          | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
-| customFields    | JSONObject      | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
+| Atributo        | Tipo            | Obrigatório |  Exemplo                          | Descrição                     | 
+| --------------- |:--------------: | :---------: | :-------------------------------: | ----------------------------- |
+| paymentId       | String          | Sim         | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
+| transactionId   | String          | Sim         | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
+| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
+| customFields    | JSONObject      | Não         | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
 
 # Enviando resposta ao inStore
 
