@@ -168,6 +168,60 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 - **reason**: mais detalhes do erro
 - **responsecode**: código do erro
 
+## Detalhamento dos atributos
+
+### Payment Request (Pagamento)
+
+`PaymentRequest.java`
+| Atributo                 | Tipo            |  Exemplo                         | Descrição                     | 
+| ------------------------ |:--------------: | :------------------------------: | ----------------------------- |
+| installmentsInterestRate | String          | 0.05                             | Taxa de juros de parcelamento |
+| installments             | String          | 2                                | Número de parcelas | 
+| merchantName             | String          | lojaABC                          | Nome da conta do lojista na VTEX |
+| paymentType              | String          | credit                           | Tipo do pagamento, credito, débito, pix, etc |
+| amount                   | String          | 77920                            | Valor do pagamento em Decimal. R$ 779,20 |
+| paymentId                | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
+| transactionId            | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
+| customFields             | JSONObject      | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
+
+### Payment Reversal Request (Reembolso)
+
+`PaymentReversalRequest.java`
+| Atributo        | Tipo            |  Exemplo                          | Descrição                     | 
+| --------------- |:--------------: | :-------------------------------: | ----------------------------- |
+| paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
+| transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
+| value           | String          | 77920                             | Valor do reembolso em Decimal. R$ 779,20 |
+| tid             | String          | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
+| customFields    | JSONObject      | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
+
+### Payment Payload (Resposta do Pagamento)
+> O PaymentResponse Encapsula o DTO `PaymentPayload`
+
+`PaymentPayload.java`
+| Atributo        | Tipo            |  Exemplo                         | Descrição                     | 
+| --------------- |:--------------: | :------------------------------: | ----------------------------- |
+| paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
+| transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
+| cardBrandName   | String          | Visa                             | Nome da bandeira do cartão |
+| firstDigits     | String          | 123456                           | Primeiros 6 dígitos do cartão |
+| lastDigits      | String          | 4321                             | Últimos 4 dígitos do cartão |
+| nsu             | String          | 066319694308                     | Número Sequencial único do pagamento na adquirência |
+| tid             | String          | uovdjptiak9hvnwyk9qx             | Identificador único do pagamento na adquirência |
+| authorizationId | String          | YSDLKYW731QZ                     | Identificador da authorização do pagamento na adquirência |
+| customFields    | JSONObject      | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
+
+### Payment Reversal Payload (Resposta do Reembolso)
+> O PaymentReversalResponse Encapsula o DTO `PaymentReversalPayload`
+
+`PaymentReversalPayload.java`
+| Atributo        | Tipo            |  Exemplo                          | Descrição                     | 
+| --------------- |:--------------: | :-------------------------------: | ----------------------------- |
+| paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
+| transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
+| tid             | String          | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
+| customFields    | JSONObject      | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
+
 # Enviando resposta ao inStore
 
 O envio de respostas ao inStore ocorre pelo início de uma nova atividade utilizando um intent programado para envio de dados. Por exemplo, pode-se utilizar o método `startActivity` contido dentro do contexto de uma atividade Android. 
