@@ -165,7 +165,7 @@ Em caso de erro existem duas classes que representam respostas de erro no SDK: `
 
 Por convenção utilizados o seguintes campos dentro do payload de erro: 
 - **error**: mensagem de erro
-- **reason**: mais detalhes do erro
+- **reason**: mais detalhes do erro, motivo ou fonte do erro
 - **responsecode**: código do erro
 
 ## Detalhamento dos atributos
@@ -178,11 +178,11 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 | installmentsInterestRate | String          | 0.05                             | Taxa de juros de parcelamento |
 | installments             | String          | 2                                | Número de parcelas | 
 | merchantName             | String          | lojaABC                          | Nome da conta do lojista na VTEX |
-| paymentType              | String          | credit                           | Tipo do pagamento, credito, débito, pix, etc |
-| amount                   | String          | 77920                            | Valor do pagamento em Decimal. R$ 779,20 |
+| paymentType              | String          | credit                           | Tipo do pagamento: credit, debit |
+| amount                   | String          | 77920                            | Valor do pagamento em centavos. R$ 779,20 |
 | paymentId                | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
 | transactionId            | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
-| customFields             | JSONObject      | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
+| customFields             | JSONObject      | { key: value }                   | Objeto chave/valor que permite qualquer campo customizável da integração |
 
 ### Payment Reversal Request (Reembolso)
 
@@ -191,9 +191,9 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 | --------------- |:--------------: | :-------------------------------: | ----------------------------- |
 | paymentId       | String          | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
 | transactionId   | String          | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
-| value           | String          | 77920                             | Valor do reembolso em Decimal. R$ 779,20 |
-| tid             | String          | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
-| customFields    | JSONObject      | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
+| value           | String          | 77920                             | Valor do reembolso em centavos. R$ 779,20 |
+| tid             | String          | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento do adquirente |
+| customFields    | JSONObject      | { key: value }                    | Objeto chave/valor que permite qualquer campo customizável da integração |
 
 ### Payment Payload (Resposta do Pagamento)
 > O PaymentResponse Encapsula o DTO `PaymentPayload`
@@ -203,13 +203,13 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 | --------------- |:--------------: | :---------: | :------------------------------: | ----------------------------- |
 | paymentId       | String          | Sim         | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1 | Identificador único do pagamento na VTEX |
 | transactionId   | String          | Sim         | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK | Identificador único da transação na VTEX |
-| cardBrandName   | String          | Sim         | Visa                             | Nome da bandeira do cartão |
-| firstDigits     | String          | Sim         | 123456                           | Primeiros 6 dígitos do cartão |
+| cardBrandName   | String          | Sim         | visa                             | Nome da bandeira do cartão |
+| firstDigits     | String          | Sim         | 1234                             | Primeiros dígitos do cartão |
 | lastDigits      | String          | Sim         | 4321                             | Últimos 4 dígitos do cartão |
 | nsu             | String          | Sim         | 066319694308                     | Número Sequencial único do pagamento na adquirência |
-| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx             | Identificador único do pagamento na adquirência |
+| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx             | Identificador único do pagamento do adquirente |
 | authorizationId | String          | Sim         | YSDLKYW731QZ                     | Identificador da authorização do pagamento na adquirência |
-| customFields    | JSONObject      | Não         | { key: value }                   | Objeto chave/valor que poder qualquer campo customizável da integração |
+| customFields    | JSONObject      | Não         | { key: value }                   | Objeto chave/valor que permite qualquer campo customizável da integração |
 
 ### Payment Reversal Payload (Resposta do Reembolso)
 > O PaymentReversalResponse Encapsula o DTO `PaymentReversalPayload`
@@ -219,8 +219,8 @@ Por convenção utilizados o seguintes campos dentro do payload de erro:
 | --------------- |:--------------: | :---------: | :-------------------------------: | ----------------------------- |
 | paymentId       | String          | Sim         | JE3IACFDPWMV1RLTSEILFDMMWIIAZDY1  | Identificador único do pagamento na VTEX |
 | transactionId   | String          | Sim         | ZAIBI9KTEOTFXBBXXBXONRK4GKWS4KRK  | Identificador único da transação na VTEX |
-| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento na adquirência |
-| customFields    | JSONObject      | Não         | { key: value }                    | Objeto chave/valor que poder qualquer campo customizável da integração |
+| tid             | String          | Sim         | uovdjptiak9hvnwyk9qx              | Identificador único do pagamento do adquirente |
+| customFields    | JSONObject      | Não         | { key: value }                    | Objeto chave/valor que permite qualquer campo customizável da integração |
 
 # Enviando resposta ao inStore
 
